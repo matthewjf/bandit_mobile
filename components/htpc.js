@@ -18,7 +18,7 @@ export default class Htpc extends Component {
 
         {/* app */}
         <View style={[styles.flexRow, styles.center, style.section, height(14)]}>
-          <Button icon='kodi' color={colors.lblue} onDown={htpcClick('/htpc/kodi')}/>
+          <Button icon='kodi' color={colors.lblue} onDown={htpcClick('kodi')}/>
           <Button icon='google-chrome' color={colors.lgreen} onDown={()=>{return 'not yet implemented';}}/>
           <Button icon='library-plus' color={colors.pink} onDown={kodiClick('update_videos')}/>
         </View>
@@ -31,7 +31,7 @@ export default class Htpc extends Component {
             <Button icon='keyboard-backspace' color={colors.grey4} onDown={kodiClick('previous')} size={8*vw}/>
           </View>
           <View style={[styles.flexRow, styles.center, height(24)]}>
-            <Button icon='chevron-left' color={colors.grey6} onDown={kodiStart('left')} size={16*vw}/>
+            <Button icon='chevron-left' color={colors.grey6} onDown={kodiStart('left')} onUp={kodiStop()} size={16*vw}/>
             <Button icon='radiobox-blank' color={colors.yellow} onDown={kodiStart('select')} size={16*vw}/>
             <Button icon='chevron-right' color={colors.grey6} onDown={kodiStart('right')} onUp={kodiStop()} size={16*vw}/>
           </View>
@@ -45,7 +45,7 @@ export default class Htpc extends Component {
         {/* media */}
         <View style={[styles.flexColumn, styles.center, style.section]}>
           <View style={[styles.flexRow, styles.center, height(14)]}>
-            <Button icon='skip-previous' color={colors.grey6} onDown={kodiStart('small_skip_back')} onUp={kodiStop()}/>
+            <Button icon='skip-previous' color={colors.grey6} onDown={kodiStart('small_skip_bck')} onUp={kodiStop()}/>
             <Button icon='play' color={colors.green} onDown={kodiClick('play')}/>
             <Button icon='skip-next' color={colors.grey6} onDown={kodiStart('small_skip_fwd')} onUp={kodiStop()}/>
           </View>

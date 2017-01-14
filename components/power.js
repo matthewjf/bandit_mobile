@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Button from './button';
 import styles, { colors, vw } from '../styles/main';
-import { HTPC_URL, RECEIVER_URL, TV_URL } from './util';
+import { htpcClick, RECEIVER_URL, TV_URL } from './util';
 
 export default class Power extends Component {
   pcClick() {
-    fetch(`${HTPC_URL}/htpc/sleep`);
-    fetch(`${HTPC_URL}/wake`);
+    htpcClick(sleep)();
+    fetch(`http://remote.local/api/htpc/wake`);
   }
 
   tvClick() {

@@ -1,7 +1,7 @@
 export const HOST = 'http://remote.local';
 
-export const HTPC_URL = `${HOST}/api/htpc`;
-export const KODI_URL = `${HTPC_URL}/kodi`;
+export const HTPC_URL = `http://htpc.local/`;
+export const KODI_URL = `${HTPC_URL}/?kodi`;
 
 export const REMOTE_URL = `${HOST}/api/remotes`;
 export const RECEIVER_URL = `${REMOTE_URL}/receiver`;
@@ -12,19 +12,19 @@ export const TV_URL = `${REMOTE_URL}/tv`;
  * */
 
 export function htpcClick(cmd) {
-  return () => fetch(`${HTPC_URL}/${cmd}`);
+  return () => fetch(`${HTPC_URL}/?htpc${cmd}`);
 }
 
 export function kodiStart(cmd) {
-  return () => fetch(`${KODI_URL}/${cmd}/start`);
+  return () => fetch(`${KODI_URL}${cmd}&withoutRelease`);
 }
 
 export function kodiStop(cmd) {
-  return () => fetch(`${HTPC_URL}/stop`);
+  return () => fetch(`${HTPC_URL}?ButtonReleased`);
 }
 
 export function kodiClick(cmd) {
-  return () => fetch(`${KODI_URL}/${cmd}`);
+  return () => fetch(`${KODI_URL}${cmd}`);
 }
 
 /**
