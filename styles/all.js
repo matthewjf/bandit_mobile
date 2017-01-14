@@ -18,7 +18,7 @@ export const colors = {
   lgreen:   '#8BC34A',
   lime:     '#CDDC39',
   yellow:   '#FFEE58',
-  amber:    '#FFC107',
+  amber:    '#F57F17',
   orange:   '#FF9800',
   dorange:  '#FF5722',
 
@@ -35,6 +35,10 @@ export const colors = {
 };
 
 const styles = StyleSheet.create({
+  primary: {
+    flex: 1,
+    backgroundColor: colors.grey1
+  },
   center: {
     justifyContent: 'center',
     alignItems: 'center'

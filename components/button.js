@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableHighlight, Vibration } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import styles, { vw, colors } from '../styles/main';
+import styles, { vw, colors } from '../styles/all';
 
 export default class button extends Component {
   constructor(props) {

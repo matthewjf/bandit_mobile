@@ -27,6 +27,10 @@ export function kodiClick(cmd) {
   return () => fetch(`${KODI_URL}${cmd}`);
 }
 
+export function piClick(cmd) {
+  return () => fetch(`${HOST}/pi/${cmd}`);
+}
+
 /**
  * RECEIVER
  * */

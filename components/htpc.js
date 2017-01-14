@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Button from './button';
-import styles, { vw, colors } from '../styles/main';
+import styles, { vw, colors } from '../styles/all';
 import { receiverClick, receiverStart, receiverStop, htpcClick, kodiClick, kodiStart, kodiStop } from './util';
 
 export default class Htpc extends Component {
