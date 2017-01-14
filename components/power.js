@@ -6,7 +6,7 @@ import { htpcClick, RECEIVER_URL, TV_URL } from './util';
 
 export default class Power extends Component {
   pcClick() {
-    htpcClick(sleep)();
+    htpcClick('sleep')();
     fetch(`http://remote.local/api/htpc/wake`);
   }
 
@@ -24,7 +24,7 @@ export default class Power extends Component {
         <Button icon='desktop-tower' color={colors.cyan} onDown={this.pcClick} style={style.btn}/>
         <Button icon='television' color={colors.red} onDown={this.tvClick} style={style.btn}/>
         <Button icon='surround-sound' color={colors.orange} onDown={this.receiverClick} style={style.btn}/>
-        <Button icon='settings' color={colors.grey6} onDown={()=>{}} style={style.btn}/>
+        <Button icon='settings-box' color={colors.grey6} onDown={()=>{}} style={style.btn}/>
       </View>
     );
   }

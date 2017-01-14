@@ -1,6 +1,6 @@
 export const HOST = 'http://remote.local';
 
-export const HTPC_URL = `http://htpc.local/`;
+export const HTPC_URL = `http://htpc.local`;
 export const KODI_URL = `${HTPC_URL}/?kodi`;
 
 export const REMOTE_URL = `${HOST}/api/remotes`;

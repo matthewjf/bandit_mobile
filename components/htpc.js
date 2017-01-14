@@ -19,7 +19,7 @@ export default class Htpc extends Component {
         {/* app */}
         <View style={[styles.flexRow, styles.center, style.section, height(14)]}>
           <Button icon='kodi' color={colors.lblue} onDown={htpcClick('kodi')}/>
-          <Button icon='google-chrome' color={colors.lgreen} onDown={()=>{return 'not yet implemented';}}/>
+          <Button icon='google-chrome' color={colors.lgreen} onDown={htpcClick('chrome')}/>
           <Button icon='library-plus' color={colors.pink} onDown={kodiClick('update_videos')}/>
         </View>
 
