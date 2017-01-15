@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Button from './button';
 import styles, { colors, vw } from '../styles/all';
-import { htpcClick, RECEIVER_URL, TV_URL } from './util';
+import { htpcClick, receiverClick, TV_URL, error } from './util';
 
 export default class Power extends Component {
   pcClick() {
     htpcClick('sleep')();
-    fetch(`http://remote.local/api/htpc/wake`);
+    fetch(`http://remote.local/api/htpc/wake`).catch(error);
   }
 
   tvClick() {
-    fetch(`${TV_URL}/KEY_POWER`);
+    fetch(`${TV_URL}/KEY_POWER`).catch(error);
   }
 
   receiverClick() {
-    fetch(`${RECEIVER_URL}/KEY_POWER`);
+    receiverClick('power')();
   }
 
   settingsClick() {

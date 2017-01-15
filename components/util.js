@@ -1,3 +1,6 @@
+import React from 'react';
+import { Alert } from 'react-native';
+
 export const HOST = 'http://remote.local';
 
 export const HTPC_URL = `http://htpc.local`;
@@ -12,23 +15,23 @@ export const TV_URL = `${REMOTE_URL}/tv`;
  * */
 
 export function htpcClick(cmd) {
-  return () => fetch(`${HTPC_URL}/?htpc${cmd}`);
+  return () => fetch(`${HTPC_URL}/?htpc${cmd}`).catch(error);
 }
 
 export function kodiStart(cmd) {
-  return () => fetch(`${KODI_URL}${cmd}&withoutRelease`);
+  return () => fetch(`${KODI_URL}${cmd}&withoutRelease`).catch(error);
 }
 
 export function kodiStop(cmd) {
-  return () => fetch(`${HTPC_URL}?ButtonReleased`);
+  return () => fetch(`${HTPC_URL}?ButtonReleased`).catch(error);
 }
 
 export function kodiClick(cmd) {
-  return () => fetch(`${KODI_URL}${cmd}`);
+  return () => fetch(`${KODI_URL}${cmd}`).catch(error);
 }
 
 export function piClick(cmd) {
-  return () => fetch(`${HOST}/pi/${cmd}`);
+  return () => fetch(`${HOST}/pi/${cmd}`).catch(error);
 }
 
 /**
@@ -40,7 +43,8 @@ const receiverMap = {
   ps4: 'KEY_GAMES',
   cast: 'KEY_SAT',
   volume_down: 'KEY_VOLUMEDOWN',
-  volume_up: 'KEY_VOLUMEUP'
+  volume_up: 'KEY_VOLUMEUP',
+  power: 'KEY_POWER'
 };
 
 function receiverCmd(cmd) {
@@ -48,13 +52,17 @@ function receiverCmd(cmd) {
 }
 
 export function receiverClick(cmd) {
-  return () => fetch(`${RECEIVER_URL}/${receiverCmd(cmd)}`);
+  return () => fetch(`${RECEIVER_URL}/${receiverCmd(cmd)}`).catch(error);
 }
 
 export function receiverStart(cmd) {
-  return () => fetch(`${RECEIVER_URL}/${receiverCmd(cmd)}/start`);
+  return () => fetch(`${RECEIVER_URL}/${receiverCmd(cmd)}/start`).catch(error);
 }
 
 export function receiverStop(cmd) {
-  return () => fetch(`${RECEIVER_URL}/${receiverCmd(cmd)}/stop`);
+  return () => fetch(`${RECEIVER_URL}/${receiverCmd(cmd)}/stop`).catch(error);
+}
+
+export function error(msg, ctx) {
+  return () => Alert.alert('Error', 'Problem sending request');
 }
