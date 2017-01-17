@@ -842,6 +842,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.matt.bandit;
 				PRODUCT_NAME = bandit;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -861,6 +862,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.matt.bandit;
 				PRODUCT_NAME = bandit;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

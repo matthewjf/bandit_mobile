@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import Button from './button';
 import styles, { colors, vw } from '../styles/all';
 import { htpcClick, receiverClick, TV_URL, error } from './util';
@@ -26,10 +26,6 @@ export default class Power extends Component {
   render() {
     return (
       <View style={[styles.flexRow, styles.center, style.power]}>
-        <Icon name='record'
-              size={6*vw}
-              color={colors.red}
-              style={style.pcStatus}/>
         <Button icon='desktop-tower' color={colors.cyan} onDown={this.pcClick} style={style.btn}/>
         <Button icon='television' color={colors.red} onDown={this.tvClick} style={style.btn}/>
         <Button icon='surround-sound' color={colors.orange} onDown={this.receiverClick} style={style.btn}/>
