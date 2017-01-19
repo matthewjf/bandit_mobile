@@ -2,23 +2,34 @@ import React, { Component } from 'react';
 import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import Button from './button';
 import styles, { colors, vw } from '../styles/all';
-import { htpcClick, receiverClick, TV_URL, error } from './util';
+import { htpcPower, receiverClick, tvClick } from './util';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import zeroconf from './zeroconf';
+
+class StatusButton extends Button {
+  constructor(props) {
+    super(props);
+    zeroconf.on(this.updateState.bind(this));
+  }
+
+  updateState() {
+    this.setState({htpc: zeroconf.htpcHost()});
+  }
+
+  renderContent() {
+    return <View style={[styles.flex, styles.center]}>
+        <Icon name={this.props.icon}
+              size={this.props.size || 10*vw}
+              color={this.props.color || 'white'} />
+        <Icon style={{position: 'absolute', left: 12*vw, top: 6*vw}}
+              name={'record'}
+              size={ 5*vw }
+              color={this.state.htpc ? colors.green : colors.red} />
+      </View>;
+  }
+}
 
 export default class Power extends Component {
-  pcClick() {
-    htpcClick('sleep')();
-    fetch(`http://remote.local/api/htpc/wake`).catch(error);
-  }
-
-  tvClick() {
-    fetch(`${TV_URL}/KEY_POWER`).catch(error);
-  }
-
-  receiverClick() {
-    receiverClick('power')();
-  }
-
   settingsClick() {
     this.props.navigator.push({id: 'settings'});
   }
@@ -26,9 +37,9 @@ export default class Power extends Component {
   render() {
     return (
       <View style={[styles.flexRow, styles.center, style.power]}>
-        <Button icon='desktop-tower' color={colors.cyan} onDown={this.pcClick} style={style.btn}/>
-        <Button icon='television' color={colors.red} onDown={this.tvClick} style={style.btn}/>
-        <Button icon='surround-sound' color={colors.orange} onDown={this.receiverClick} style={style.btn}/>
+        <StatusButton icon='desktop-tower' color={colors.cyan} onDown={htpcPower()} style={style.btn}/>
+        <Button icon='television' color={colors.red} onDown={tvClick('KEY_POWER')} style={style.btn}/>
+        <Button icon='surround-sound' color={colors.orange} onDown={receiverClick('power')} style={style.btn}/>
         <Button icon='settings-box' color={colors.grey6} onDown={this.settingsClick.bind(this)} style={style.btn}/>
       </View>
     );

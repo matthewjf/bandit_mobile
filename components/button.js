@@ -9,6 +9,7 @@ export default class button extends Component {
     this.onDown = this.onDown.bind(this);
     this.onUp = this.onUp.bind(this);
     this.renderContent = this.renderContent.bind(this);
+    this.state = {};
   }
 
   onDown(e) {

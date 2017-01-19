@@ -1,42 +1,77 @@
 import React from 'react';
+import zeroconf from './zeroconf';
 import { Alert } from 'react-native';
 
-export const HOST = 'http://remote.local';
+var REMOTE_URL, HTPC_URL, REMOTES, RECEIVER, TV, KODI;
 
-export const HTPC_URL = `http://htpc.local`;
-export const KODI_URL = `${HTPC_URL}/?kodi`;
+function onUpdate() {
+  var remotehost = zeroconf.remoteHost();
+  var htpchost = zeroconf.htpcHost();
+  REMOTE_URL =  remotehost ? `http://${remotehost}` : null;
+  HTPC_URL =  htpchost ? `http://${htpchost}` : null;
+  setUrls();
+}
 
-export const REMOTE_URL = `${HOST}/api/remotes`;
-export const RECEIVER_URL = `${REMOTE_URL}/receiver`;
-export const TV_URL = `${REMOTE_URL}/tv`;
+function setUrls() {
+  REMOTES = REMOTE_URL ? `${REMOTE_URL}/api/remotes` : null;
+  RECEIVER = REMOTES ? `${REMOTES}/receiver` : null;
+  TV = REMOTES ? `${REMOTES}/tv` : null;
+  KODI = HTPC_URL ? `${HTPC_URL}/?kodi` : null;
+}
+
+zeroconf.on(onUpdate);
+
+function error(msg="Problem sending request", ctx="Error") {
+  Alert.alert(ctx, msg);
+}
+
+function baseFetch(dep, url) {
+  if (dep) fetch(url).catch(error);
+  else error(`No response`);
+}
 
 /**
  * HTPC
  * */
 
+export function htpcPower() {
+  return () => {
+    if (HTPC_URL) fetch(`${HTPC_URL}/?htpcsleep`).catch(error);
+    wakeHtpc()();
+  };
+}
+
 export function htpcClick(cmd) {
-  return () => fetch(`${HTPC_URL}/?htpc${cmd}`).catch(error);
+  return () => baseFetch(HTPC_URL, `${HTPC_URL}/?htpc${cmd}`);
 }
 
 export function kodiStart(cmd) {
-  return () => fetch(`${KODI_URL}${cmd}&withoutRelease`).catch(error);
+  return () => baseFetch(KODI, `${KODI}${cmd}&withoutRelease`);
 }
 
-export function kodiStop(cmd) {
-  return () => fetch(`${HTPC_URL}?ButtonReleased`).catch(error);
+export function kodiStop() {
+  return () => baseFetch(HTPC_URL, `${HTPC_URL}?ButtonReleased`);
 }
 
 export function kodiClick(cmd) {
-  return () => fetch(`${KODI_URL}${cmd}`).catch(error);
+  return () => baseFetch(KODI, `${KODI}${cmd}`);
 }
 
 export function piClick(cmd) {
-  return () => fetch(`${HOST}/pi/${cmd}`).catch(error);
+  return () => baseFetch(REMOTE_URL, `${REMOTE_URL}/pi/${cmd}`);
 }
 
 /**
- * RECEIVER
+ * PI
  * */
+
+export function wakeHtpc() {
+  return () => baseFetch(REMOTE_URL, `${REMOTE_URL}/api/htpc/wake`);
+}
+
+export function tvClick(cmd) {
+  return () => baseFetch(TV, `${TV}/${cmd}`);
+}
 
 const receiverMap = {
   htpc: 'KEY_DVD',
@@ -52,17 +87,13 @@ function receiverCmd(cmd) {
 }
 
 export function receiverClick(cmd) {
-  return () => fetch(`${RECEIVER_URL}/${receiverCmd(cmd)}`).catch(error);
+  return () => baseFetch(RECEIVER, `${RECEIVER}/${receiverCmd(cmd)}`);
 }
 
 export function receiverStart(cmd) {
-  return () => fetch(`${RECEIVER_URL}/${receiverCmd(cmd)}/start`).catch(error);
+  return () => baseFetch(RECEIVER, `${RECEIVER}/${receiverCmd(cmd)}/start`);
 }
 
 export function receiverStop(cmd) {
-  return () => fetch(`${RECEIVER_URL}/${receiverCmd(cmd)}/stop`).catch(error);
-}
-
-export function error(msg, ctx) {
-  return () => Alert.alert('Error', 'Problem sending request');
+  return () => baseFetch(RECEIVER, `${RECEIVER}/${receiverCmd(cmd)}/stop`);
 }

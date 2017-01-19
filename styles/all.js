@@ -1,8 +1,8 @@
 import { StyleSheet, Dimensions } from 'react-native';
 var { height, width } = Dimensions.get('window');
 
-export var vw = width/100;
-export var vh = height/100;
+let maxWidth = height*9/16;
+export var vw = Math.min(width/100, maxWidth/100);
 
 export const colors = {
   red:      '#F44336',
