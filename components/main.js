@@ -9,8 +9,18 @@ import zeroconf from './zeroconf';
 export default class Main extends Component {
   constructor(props) {
     super(props);
-    zeroconf.on(this.updateState.bind(this));
+    this.updateState = this.updateState.bind(this);
+
     this.state = {};
+  }
+
+  componentDidMount() {
+    this.updateState();
+    zeroconf.on(this.updateState);
+  }
+
+  componentWillUnmount() {
+    zeroconf.off(this.updateState);
   }
 
   updateState() {

@@ -1,6 +1,6 @@
-import { Alert } from 'react-native';
+import { Platform, AppState } from 'react-native';
 import Zeroconf from 'react-native-zeroconf';
-
+import { Alert } from 'react-native';
 const REMOTE_SERVICE = 'remote';
 const HTPC_SERVICE = 'htpc';
 const SERVICE_TYPE = 'smb';
@@ -17,7 +17,14 @@ class Zero {
   constructor() {
     _zeroconf.on('resolved', this.updateState.bind(this));
     _zeroconf.on('removed', this.updateState.bind(this));
-    _zeroconf.on('error', () => Alert.alert('zeroconf error'));
+    _zeroconf.on('update', this.updateState.bind(this));
+    _zeroconf.on('error',() => Alert.alert('zeroconf error'));
+
+    AppState.addEventListener("change", () => {
+      if (AppState.currentState === 'active') _zeroconf.scan(SERVICE_TYPE);
+      else _zeroconf.stop();
+    });
+
     _zeroconf.scan(SERVICE_TYPE);
   }
 
@@ -25,12 +32,12 @@ class Zero {
     var services = _zeroconf.getServices();
 
     if (services[REMOTE_SERVICE] && services[REMOTE_SERVICE].host)
-      _remoteHost = services[REMOTE_SERVICE].host;
+      _remoteHost = Platform.OS === 'android' ? services[REMOTE_SERVICE].host : 'remote.local';
     else if (!services[REMOTE_SERVICE])
       _remoteHost = null;
 
     if (services[HTPC_SERVICE] && services[HTPC_SERVICE].host)
-      _htpcHost = services[HTPC_SERVICE].host;
+      _htpcHost = Platform.OS === 'android' ? services[HTPC_SERVICE].host : 'htpc.local';
     else if (!services[HTPC_SERVICE])
       _htpcHost = null;
 

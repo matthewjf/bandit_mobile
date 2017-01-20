@@ -9,7 +9,15 @@ import zeroconf from './zeroconf';
 class StatusButton extends Button {
   constructor(props) {
     super(props);
-    zeroconf.on(this.updateState.bind(this));
+    this.updateState = this.updateState.bind(this);
+  }
+  componentDidMount() {
+    this.updateState();
+    zeroconf.on(this.updateState);
+  }
+
+  componentWillUnmount() {
+    zeroconf.off(this.updateState);
   }
 
   updateState() {
