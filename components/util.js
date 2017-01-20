@@ -27,7 +27,7 @@ function error(msg="Problem sending request", ctx="Error") {
 
 function baseFetch(dep, url) {
   if (dep) fetch(url).catch(error);
-  else error(`No response`);
+  else error(`Check if the device is turned on. If so, try restarting it.`, `No response`);
 }
 
 /**
@@ -50,7 +50,9 @@ export function kodiStart(cmd) {
 }
 
 export function kodiStop() {
-  return () => baseFetch(HTPC_URL, `${HTPC_URL}?ButtonReleased`);
+  // prevents double alerts
+  if (HTPC_URL) return () => fetch(`${HTPC_URL}?ButtonReleased`).catch(error);
+  else return () => {};
 }
 
 export function kodiClick(cmd) {
