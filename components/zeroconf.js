@@ -17,7 +17,6 @@ class Zero {
   constructor() {
     _zeroconf.on('resolved', this.updateState.bind(this));
     _zeroconf.on('removed', this.updateState.bind(this));
-    _zeroconf.on('update', this.updateState.bind(this));
     _zeroconf.on('error',() => Alert.alert('zeroconf error'));
 
     AppState.addEventListener("change", () => {
