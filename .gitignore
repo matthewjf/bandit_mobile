@@ -54,5 +54,5 @@ fastlane/screenshots
 
 .eslintrc.json
 
-android
-ios
+android/
+ios/
