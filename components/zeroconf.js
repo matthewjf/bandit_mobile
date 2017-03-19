@@ -2,7 +2,7 @@ import { Platform, AppState } from 'react-native';
 import Zeroconf from 'react-native-zeroconf';
 import { Alert } from 'react-native';
 const REMOTE_SERVICE = 'remote';
-const HTPC_SERVICE = 'htpc';
+const HTPC_SERVICE = 'HTPC';
 const SERVICE_TYPE = 'smb';
 
 var _remoteHost, _htpcHost;
